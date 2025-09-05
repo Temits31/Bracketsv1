@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import './global.css';
 import Home from 'screens/Home';
 import Login from 'screens/Login';
+import CommentScreen from 'screens/CommentScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,9 +16,13 @@ export default function App() {
   return (
     <>
      <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Home"
+      screenOptions={{
+        animation: "slide_from_right", 
+      }}>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+        <Stack.Screen name="Comments" component={CommentScreen} />
       </Stack.Navigator>
     </NavigationContainer>
       
