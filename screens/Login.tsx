@@ -1,11 +1,31 @@
-import { TextInput, View, Button,  ImageBackground } from 'react-native';
-import React, { useState } from 'react';
+import { View, TextInput, Button, Text, Alert, ImageBackground } from "react-native";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import '../global.css';
+import { useState } from 'react';
 
-export default function Home() {
-  const [nameInput, setNameInput] = useState('');
+export default function Login({ navigation }: any) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const login = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigation.replace("Home"); // go to home after login
+    } catch (err: any) {
+      Alert.alert("Login Error", err.message);
+    }
+  };
+
+  const signup = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigation.replace("Home");
+    } catch (err: any) {
+      Alert.alert("Signup Error", err.message);
+    }
+  };
   return (
     <SafeAreaProvider>
       <SafeAreaView className="flex-1">
@@ -16,27 +36,23 @@ export default function Home() {
         >
           <View className='flex justify-center items-center p-16 '>
             <TextInput
-              onChangeText={setNameInput}
-              value={nameInput}
-              placeholder="Enter name"
+              value={email}
+              placeholder="Enter email"
               className="border border-gray-400 p-2 rounded-md text-lg bg-white"
               style={{ width: 250 }}
+              onChangeText={setEmail}
             />
             <TextInput
-              onChangeText={setNameInput}
-              value={nameInput}
+              onChangeText={setPassword}
+              value={password}
               placeholder="Password"
               className="border border-gray-400 p-2 rounded-md text-lg bg-white"
               style={{ width: 250 }}
             />
 
           </View>
-          <Button
-              title="Log in"
-             
-             
-              onPress={() => console.log('aye')}
-            />
+          <Button title="Login" onPress={login} />
+      <Button title="Signup" onPress={signup} />
         </ImageBackground>
       </SafeAreaView>
     </SafeAreaProvider>

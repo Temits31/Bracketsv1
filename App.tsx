@@ -16,7 +16,7 @@ export default function App() {
   return (
     <>
      <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home"
+      <Stack.Navigator initialRouteName="Login"
       screenOptions={{
         animation: "slide_from_right", 
       }}>
